@@ -144,10 +144,20 @@
                 <div class="result-container">
                     <!-- Grand Total Display -->
                     <div class="total-display">
-                        <div class="total-label">ประมาณการยอดรวมสุทธิ</div>
-                        <div class="total-amount"><span id="grand-total">0</span> <span class="currency">บาท</span>
+                        <div class="total-summary-rows">
+                            <div class="summary-row">
+                                <span class="summary-label">ประมาณการยอดรวมสุทธิ</span>
+                                <span class="summary-value"><span id="grand-total">0</span> <span class="currency-sub">บาท</span></span>
+                            </div>
+                            <div class="summary-row">
+                                <span class="summary-label">ภาษีมูลค่าเพิ่ม (VAT 7%)</span>
+                                <span class="summary-value"><span id="vat-amount">0</span> <span class="currency-sub">บาท</span></span>
+                            </div>
                         </div>
-                        <div class="vat-note">ราคาดังกล่าวไม่ได้รวมภาษีมูลค่าเพิ่ม</div>
+                        <div class="total-divider"></div>
+                        <div class="total-label">ยอดรวมทั้งสิ้น (รวม VAT)</div>
+                        <div class="total-amount"><span id="total-with-vat">0</span> <span class="currency">บาท</span>
+                        </div>
                     </div>
 
                     <!-- Details Breakdown -->

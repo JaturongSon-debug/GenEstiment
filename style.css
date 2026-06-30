@@ -369,9 +369,43 @@ select option {
   border: 1px solid rgba(6, 182, 212, 0.25);
   border-radius: 20px;
   padding: 1.5rem;
-  text-align: center;
   margin-bottom: 2rem;
   box-shadow: inset 0 0 20px rgba(6, 182, 212, 0.05);
+}
+
+.total-summary-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.summary-label {
+  color: var(--text-secondary);
+}
+
+.summary-value {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.currency-sub {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-left: 0.2rem;
+}
+
+.total-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 0.75rem 0;
 }
 
 .total-label {
@@ -381,6 +415,7 @@ select option {
   letter-spacing: 0.05em;
   margin-bottom: 0.5rem;
   font-weight: 600;
+  text-align: center;
 }
 
 .total-amount {
@@ -687,6 +722,22 @@ body.light-theme .total-amount .currency {
 
 body.light-theme .vat-note {
   color: rgba(0, 0, 0, 0.5);
+}
+
+body.light-theme .summary-label {
+  color: #4b5563;
+}
+
+body.light-theme .summary-value {
+  color: #1f2937;
+}
+
+body.light-theme .total-divider {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+body.light-theme .currency-sub {
+  color: #4b5563;
 }
 
 body.light-theme .breakdown-item {

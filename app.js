@@ -145,8 +145,13 @@ function updateUI() {
 
   const result = calculateTotalExpenses(customerType, sizeRange, totalDays, numMachines, distanceRange);
 
-  // อัปเดตยอดรวมสุทธิ
+  // อัปเดตยอดรวมสุทธิและภาษีมูลค่าเพิ่ม
+  const vatAmount = result.grandTotal * 0.07;
+  const totalWithVat = result.grandTotal + vatAmount;
+
   document.getElementById('grand-total').textContent = formatCurrency(result.grandTotal);
+  document.getElementById('vat-amount').textContent = formatCurrency(vatAmount);
+  document.getElementById('total-with-vat').textContent = formatCurrency(totalWithVat);
 
   // อัปเดตรายละเอียดค่าเช่าเครื่องยนต์
   const customerTypeText = customerType === 'A' ? 'ประเภท ก (หน่วยงานภายใน)' : 'ประเภท ข (ทั่วไป)';
