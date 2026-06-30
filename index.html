@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,19 +8,27 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Prompt:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="glass-bg"></div>
     <div class="container">
         <!-- Header -->
         <header class="app-header">
-            <div class="logo">
-                <i class="fa-solid fa-charging-station lightning-icon"></i>
-                <h1>ระบบคำนวณประมาณการค่าใช้จ่าย</h1>
+            <div class="header-top">
+                <div class="logo">
+                    <i class="fa-solid fa-charging-station lightning-icon"></i>
+                    <h1>ระบบคำนวณประมาณการค่าใช้จ่าย ของ กฟภ.</h1>
+                </div>
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Theme">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
             </div>
             <p class="subtitle">คำนวณค่าเช่าเครื่องกำเนิดไฟฟ้า, ค่าควบคุมงาน และค่าจัดส่งแบบครบวงจร</p>
         </header>
@@ -32,7 +41,7 @@
                     <i class="fa-solid fa-sliders"></i>
                     <h2>ระบุเงื่อนไขการเช่า</h2>
                 </div>
-                
+
                 <form id="calculator-form" onsubmit="event.preventDefault();">
                     <!-- Customer Type -->
                     <div class="form-group">
@@ -82,9 +91,12 @@
                         <div class="form-group">
                             <label class="form-label">จำนวนเครื่องที่เช่า</label>
                             <div class="number-stepper">
-                                <button type="button" class="step-btn" onclick="stepInput('num_machines', -1)"><i class="fa-solid fa-minus"></i></button>
-                                <input type="number" id="num_machines" name="num_machines" value="1" min="1" max="50" required>
-                                <button type="button" class="step-btn" onclick="stepInput('num_machines', 1)"><i class="fa-solid fa-plus"></i></button>
+                                <button type="button" class="step-btn" onclick="stepInput('num_machines', -1)"><i
+                                        class="fa-solid fa-minus"></i></button>
+                                <input type="number" id="num_machines" name="num_machines" value="1" min="1" max="50"
+                                    required>
+                                <button type="button" class="step-btn" onclick="stepInput('num_machines', 1)"><i
+                                        class="fa-solid fa-plus"></i></button>
                             </div>
                         </div>
 
@@ -92,9 +104,12 @@
                         <div class="form-group">
                             <label class="form-label">จำนวนวันที่ต้องการเช่า</label>
                             <div class="number-stepper">
-                                <button type="button" class="step-btn" onclick="stepInput('total_days', -1)"><i class="fa-solid fa-minus"></i></button>
-                                <input type="number" id="total_days" name="total_days" value="1" min="1" max="365" required>
-                                <button type="button" class="step-btn" onclick="stepInput('total_days', 1)"><i class="fa-solid fa-plus"></i></button>
+                                <button type="button" class="step-btn" onclick="stepInput('total_days', -1)"><i
+                                        class="fa-solid fa-minus"></i></button>
+                                <input type="number" id="total_days" name="total_days" value="1" min="1" max="365"
+                                    required>
+                                <button type="button" class="step-btn" onclick="stepInput('total_days', 1)"><i
+                                        class="fa-solid fa-plus"></i></button>
                             </div>
                         </div>
                     </div>
@@ -131,6 +146,7 @@
                     <div class="total-display">
                         <div class="total-label">ประมาณการยอดรวมสุทธิ</div>
                         <div class="total-amount"><span id="grand-total">0</span> <span class="currency">บาท</span></div>
+                        <div class="vat-note">ราคาดังกล่าวไม่ได้รวมภาษีมูลค่าเพิ่ม</div>
                     </div>
 
                     <!-- Details Breakdown -->
@@ -177,17 +193,25 @@
                         <h4><i class="fa-solid fa-circle-exclamation"></i> เงื่อนไขและข้อกำหนดเพิ่มเติม</h4>
                         <ul>
                             <li>ระยะทางขนส่งเริ่มนับจาก กฟฟ. เจ้าของทรัพย์สิน ไปยังสถานที่ใช้งานจริง</li>
-                            <li>สำหรับขนาดเครื่อง 3-15 kW ผู้เช่าต้องเป็นผู้รับและส่งคืนเครื่องยนต์ ณ กฟฟ. เอง (ค่าขนส่งเป็น 0 บาท)</li>
-                            <li>อัตราค่าบริการควบคุมงานคำนวณแบบ "ต่อคนต่อวัน" และค่าขนส่งคำนวณแบบ "ต่อเที่ยว (ไป-กลับ) ต่อเครื่อง"</li>
+                            <li>สำหรับขนาดเครื่อง 3-15 kW ผู้เช่าต้องเป็นผู้รับและส่งคืนเครื่องยนต์ ณ กฟฟ. เอง
+                                (ค่าขนส่งเป็น 0 บาท)</li>
+                            <li>อัตราค่าบริการควบคุมงานคำนวณแบบ "ต่อคนต่อวัน" และค่าขนส่งคำนวณแบบ "ต่อเที่ยว (ไป-กลับ)
+                                ต่อเครื่อง"</li>
                             <li>ราคานี้เป็นราคาประมาณการเบื้องต้นตามตารางมาตรฐาน</li>
                         </ul>
                     </div>
                 </div>
             </section>
         </div>
+        
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>Copyright &copy; 2026 App Gen Estiment ผรผ.กสฟ.น2</p>
+        </footer>
     </div>
 
     <!-- Script connection -->
     <script src="app.js"></script>
 </body>
+
 </html>

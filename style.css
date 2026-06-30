@@ -546,10 +546,189 @@ select option {
   .form-row-2 {
     grid-template-columns: 1fr;
   }
-  .panel {
-    padding: 1.5rem;
-  }
   .total-amount {
     font-size: 2.2rem;
   }
 }
+
+/* Header Top layout & Theme Toggle styling */
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto 0.5rem auto;
+  gap: 1.5rem;
+}
+
+.theme-toggle-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  flex-shrink: 0;
+}
+
+.theme-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--accent-cyan);
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+}
+
+/* VAT Note styling */
+.vat-note {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 0.5rem;
+  font-weight: 300;
+}
+
+/* Footer styling */
+.app-footer {
+  text-align: center;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--panel-border);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+/* Light Theme styles overrides */
+body.light-theme {
+  --bg-color: #f3f4f6;
+  --panel-bg: rgba(255, 255, 255, 0.7);
+  --panel-border: rgba(0, 0, 0, 0.08);
+  --text-primary: #1f2937;
+  --text-secondary: #4b5563;
+  --accent-cyan: #0891b2;
+  --accent-emerald: #059669;
+  --accent-amber: #d97706;
+  
+  background-image: radial-gradient(circle at top right, rgba(8, 145, 178, 0.05), transparent 40%),
+                    radial-gradient(circle at bottom left, rgba(5, 150, 105, 0.05), transparent 40%);
+}
+
+body.light-theme .glass-bg {
+  opacity: 0.3;
+}
+
+body.light-theme .panel {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+}
+
+body.light-theme .radio-custom {
+  background: rgba(0, 0, 0, 0.015);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+body.light-theme .radio-card input:checked + .radio-custom {
+  background: rgba(8, 145, 178, 0.05);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 15px rgba(8, 145, 178, 0.1);
+}
+
+body.light-theme .radio-title {
+  color: #1f2937;
+}
+
+body.light-theme .radio-card input:checked + .radio-custom .radio-title {
+  color: var(--accent-cyan);
+}
+
+body.light-theme select,
+body.light-theme .number-stepper {
+  background: rgba(0, 0, 0, 0.015);
+  border-color: rgba(0, 0, 0, 0.06);
+  color: #1f2937;
+}
+
+body.light-theme select option,
+body.light-theme select optgroup {
+  background-color: #ffffff;
+  color: #1f2937;
+}
+
+body.light-theme .step-btn {
+  color: #1f2937;
+}
+
+body.light-theme .step-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--accent-cyan);
+}
+
+body.light-theme .number-stepper input[type="number"] {
+  color: #1f2937;
+}
+
+body.light-theme .total-display {
+  background: linear-gradient(135deg, rgba(8, 145, 178, 0.08) 0%, rgba(5, 150, 105, 0.08) 100%);
+  border-color: rgba(8, 145, 178, 0.15);
+  box-shadow: none;
+}
+
+body.light-theme .total-amount {
+  background: linear-gradient(135deg, #1f2937 50%, #0891b2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+body.light-theme .total-amount .currency {
+  color: #1f2937;
+  -webkit-text-fill-color: #1f2937;
+}
+
+body.light-theme .vat-note {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+body.light-theme .breakdown-item {
+  background: rgba(0, 0, 0, 0.01);
+  border-color: rgba(0, 0, 0, 0.03);
+}
+
+body.light-theme .breakdown-item:hover {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+body.light-theme .item-value {
+  color: #1f2937;
+}
+
+body.light-theme .item-subtitle strong {
+  color: #1f2937;
+}
+
+body.light-theme .app-header h1 {
+  background: linear-gradient(135deg, #111827, #4b5563);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+body.light-theme .theme-toggle-btn {
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: #1f2937;
+}
+
+body.light-theme .theme-toggle-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--accent-cyan);
+  box-shadow: 0 0 10px rgba(8, 145, 178, 0.2);
+}
+
+@media (max-width: 480px) {
+  .header-top {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
