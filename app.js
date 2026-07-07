@@ -95,11 +95,69 @@ function calculateRentalFee(customerType, sizeRange, totalDays) {
   return totalFee;
 }
 
+// ฟังก์ชันแปลงค่าเงินตัวเลขเป็นตัวอักษรไทย (Thai Baht Text)
+function ThaiBaht(Number) {
+  if (isNaN(Number)) return "";
+  Number = Math.round(Number * 100) / 100;
+  const numStr = Number.toString().split('.');
+  let baht = numStr[0];
+  let satang = numStr[1] ? numStr[1] : "";
+  
+  if (satang.length === 1) satang += "0";
+  
+  let result = "";
+  if (parseFloat(Number) === 0) {
+    return "ศูนย์บาทถ้วน";
+  }
+  
+  result += NumberToThaiText(baht) + "บาท";
+  if (satang === "" || satang === "00") {
+    result += "ถ้วน";
+  } else {
+    result += NumberToThaiText(satang) + "สตางค์";
+  }
+  return result;
+}
+
+function NumberToThaiText(NumberString) {
+  const thaiNumbers = ["ศูนย์", "หนึ่ง", "สอง", "สาม", "สี่", "ห้า", "หก", "เจ็ด", "แปด", "เก้า"];
+  const thaiPositions = ["", "สิบ", "ร้อย", "พัน", "หมื่น", "แสน", "ล้าน"];
+  let text = "";
+  const len = NumberString.length;
+  
+  for (let i = 0; i < len; i++) {
+    const digit = parseInt(NumberString.charAt(i));
+    const position = len - 1 - i;
+    
+    if (digit !== 0) {
+      if (position === 1 && digit === 1) {
+        text += "สิบ";
+      } else if (position === 1 && digit === 2) {
+        text += "ยี่สิบ";
+      } else if (position === 0 && digit === 1 && len > 1 && parseInt(NumberString.charAt(i - 1)) !== 0) {
+        text += "เอ็ด";
+      } else {
+        text += thaiNumbers[digit] + thaiPositions[position % 6];
+      }
+    }
+    
+    if (position >= 6 && position % 6 === 0) {
+      text += "ล้าน";
+    }
+  }
+  return text;
+}
+
 // ฟังก์ชันคำนวณทั้งหมด
-function calculateTotalExpenses(customerType, sizeRange, totalDays, numMachines, distanceRange) {
+function calculateTotalExpenses(regulationType, customerType, sizeRange, totalDays, numMachines, distanceRange) {
   // 1. ค่าเช่ารวม
-  const rentalFeePerMachine = calculateRentalFee(customerType, sizeRange, totalDays);
-  const totalRentalFee = rentalFeePerMachine * numMachines;
+  let rentalFeePerMachine = 0;
+  let totalRentalFee = 0;
+  
+  if (regulationType === 'rental_reg') {
+    rentalFeePerMachine = calculateRentalFee(customerType, sizeRange, totalDays);
+    totalRentalFee = rentalFeePerMachine * numMachines;
+  }
 
   // 2. ค่าควบคุมงาน
   const controlKey = getControlRangeKey(sizeRange);
@@ -137,13 +195,14 @@ function formatCurrency(number) {
 // อัปเดตการสรุปผลบนหน้าจอ UI
 function updateUI() {
   const form = document.getElementById('calculator-form');
+  const regulationType = form.elements['regulation_type'].value;
   const customerType = form.elements['customer_type'].value;
   const sizeRange = form.elements['size_range'].value;
   const numMachines = parseInt(form.elements['num_machines'].value) || 1;
   const totalDays = parseInt(form.elements['total_days'].value) || 1;
   const distanceRange = form.elements['distance_range'].value;
 
-  const result = calculateTotalExpenses(customerType, sizeRange, totalDays, numMachines, distanceRange);
+  const result = calculateTotalExpenses(regulationType, customerType, sizeRange, totalDays, numMachines, distanceRange);
 
   // อัปเดตยอดรวมสุทธิและภาษีมูลค่าเพิ่ม
   const vatAmount = result.grandTotal * 0.07;
@@ -152,14 +211,26 @@ function updateUI() {
   document.getElementById('grand-total').textContent = formatCurrency(result.grandTotal);
   document.getElementById('vat-amount').textContent = formatCurrency(vatAmount);
   document.getElementById('total-with-vat').textContent = formatCurrency(totalWithVat);
+  document.getElementById('total-baht-text').textContent = `(${ThaiBaht(totalWithVat)})`;
 
   // อัปเดตรายละเอียดค่าเช่าเครื่องยนต์
-  const customerTypeText = customerType === 'A' ? 'ประเภท ก (หน่วยงานภายใน)' : 'ประเภท ข (ทั่วไป)';
-  document.getElementById('rental-detail-text').innerHTML = `
-    ขนาด <strong>${sizeRange} kW</strong> (${customerTypeText})<br>
-    จำนวน <strong>${numMachines} เครื่อง</strong> &times; ${totalDays} วัน (เครื่องละ ${formatCurrency(result.rentalFeePerMachine)} บาท)
-  `;
-  document.getElementById('rental-total-fee').textContent = `${formatCurrency(result.totalRentalFee)} บาท`;
+  const rentalBreakdownItem = document.getElementById('rental-breakdown-item');
+  if (regulationType === 'generator_set_reg') {
+    rentalBreakdownItem.style.opacity = '0.65';
+    document.getElementById('rental-detail-text').innerHTML = `
+      ขนาด <strong>${sizeRange} kW</strong><br>
+      <span style="color: var(--accent-amber); font-weight: 500;"><i class="fa-solid fa-circle-check"></i> ได้รับการยกเว้นค่าเช่าตามระเบียบการนำชุดเครื่องกำเนิดไฟฟ้า</span>
+    `;
+    document.getElementById('rental-total-fee').textContent = `0 บาท`;
+  } else {
+    rentalBreakdownItem.style.opacity = '1';
+    const customerTypeText = customerType === 'A' ? 'ประเภท ก (หน่วยงานภายใน)' : 'ประเภท ข (ทั่วไป)';
+    document.getElementById('rental-detail-text').innerHTML = `
+      ขนาด <strong>${sizeRange} kW</strong> (${customerTypeText})<br>
+      จำนวน <strong>${numMachines} เครื่อง</strong> &times; ${totalDays} วัน (เครื่องละ ${formatCurrency(result.rentalFeePerMachine)} บาท)
+    `;
+    document.getElementById('rental-total-fee').textContent = `${formatCurrency(result.totalRentalFee)} บาท`;
+  }
 
   // อัปเดตรายละเอียดพนักงานควบคุมงาน
   const controlKey = getControlRangeKey(sizeRange);

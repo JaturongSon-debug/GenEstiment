@@ -43,6 +43,18 @@
                 </div>
 
                 <form id="calculator-form" onsubmit="event.preventDefault();">
+                    <!-- Regulation Type -->
+                    <div class="form-group">
+                        <label for="regulation_type" class="form-label">ระเบียบการคิดค่าใช้จ่าย</label>
+                        <div class="select-wrapper">
+                            <select id="regulation_type" name="regulation_type" required>
+                                <option value="rental_reg" selected>ระเบียบ การคิดค่าเช่าเครื่องกำเนิดไฟฟ้า (รูปแบบเดิม)</option>
+                                <option value="generator_set_reg">ระเบียบ การนำชุดเครื่องกำเนิดไฟฟ้า (เฉพาะค่าควบคุมและค่าขนส่ง)</option>
+                            </select>
+                            <i class="fa-solid fa-chevron-down select-icon"></i>
+                        </div>
+                    </div>
+
                     <!-- Customer Type -->
                     <div class="form-group">
                         <label class="form-label">ประเภทผู้เช่า</label>
@@ -142,28 +154,10 @@
                 </div>
 
                 <div class="result-container">
-                    <!-- Grand Total Display -->
-                    <div class="total-display">
-                        <div class="total-summary-rows">
-                            <div class="summary-row">
-                                <span class="summary-label">ประมาณการยอดรวมสุทธิ</span>
-                                <span class="summary-value"><span id="grand-total">0</span> <span class="currency-sub">บาท</span></span>
-                            </div>
-                            <div class="summary-row">
-                                <span class="summary-label">ภาษีมูลค่าเพิ่ม (VAT 7%)</span>
-                                <span class="summary-value"><span id="vat-amount">0</span> <span class="currency-sub">บาท</span></span>
-                            </div>
-                        </div>
-                        <div class="total-divider"></div>
-                        <div class="total-label">ยอดรวมทั้งสิ้น (รวม VAT)</div>
-                        <div class="total-amount"><span id="total-with-vat">0</span> <span class="currency">บาท</span>
-                        </div>
-                    </div>
-
                     <!-- Details Breakdown -->
                     <div class="breakdown-list">
                         <!-- Machine Rental item -->
-                        <div class="breakdown-item">
+                        <div class="breakdown-item" id="rental-breakdown-item">
                             <div class="item-icon rental-icon">
                                 <i class="fa-solid fa-charging-station"></i>
                             </div>
@@ -197,6 +191,24 @@
                             </div>
                             <div class="item-value" id="transport-total-fee">0 บาท</div>
                         </div>
+                    </div>
+
+                    <!-- Grand Total Display -->
+                    <div class="total-display">
+                        <div class="total-summary-rows">
+                            <div class="summary-row">
+                                <span class="summary-label">ประมาณการยอดรวมสุทธิ</span>
+                                <span class="summary-value"><span id="grand-total">0</span> <span class="currency-sub">บาท</span></span>
+                            </div>
+                            <div class="summary-row">
+                                <span class="summary-label">ภาษีมูลค่าเพิ่ม (VAT 7%)</span>
+                                <span class="summary-value"><span id="vat-amount">0</span> <span class="currency-sub">บาท</span></span>
+                            </div>
+                        </div>
+                        <div class="total-divider"></div>
+                        <div class="total-label">ยอดรวมทั้งสิ้น (รวม VAT)</div>
+                        <div class="total-amount"><span id="total-with-vat">0</span> <span class="currency">บาท</span></div>
+                        <div class="total-baht-text" id="total-baht-text">(ศูนย์บาทถ้วน)</div>
                     </div>
 
                     <!-- Remarks & Footnotes -->

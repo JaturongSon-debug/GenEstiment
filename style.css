@@ -439,6 +439,15 @@ select option {
   -webkit-text-fill-color: var(--text-primary);
 }
 
+.total-baht-text {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-top: 0.5rem;
+  font-style: italic;
+  font-weight: 500;
+}
+
 /* Breakdown List */
 .breakdown-list {
   display: flex;
